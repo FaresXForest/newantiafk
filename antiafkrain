@@ -1,0 +1,57 @@
+local screenGui = Instance.new("ScreenGui")
+local mainFrame = Instance.new("Frame")
+local titleLabel = Instance.new("TextLabel")
+local statusLabel = Instance.new("TextLabel")
+
+screenGui.Parent = game.CoreGui
+screenGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+
+mainFrame.Parent = screenGui
+mainFrame.BackgroundColor3 = Color3.new(0.1, 0.1, 0.1)
+mainFrame.Size = UDim2.new(0.5, 0, 0.3, 0)
+mainFrame.Position = UDim2.new(0.25, 0, 0.35, 0)
+mainFrame.BorderSizePixel = 0
+mainFrame.Active = true
+mainFrame.Draggable = true
+
+titleLabel.Parent = mainFrame
+titleLabel.Size = UDim2.new(1, 0, 0.5, 0)
+titleLabel.Position = UDim2.new(0, 0, 0, 0)
+titleLabel.BackgroundTransparency = 1
+titleLabel.Font = Enum.Font.SourceSansBold
+titleLabel.Text = "FO ON TOP"
+titleLabel.TextColor3 = Color3.new(1, 1, 1)
+titleLabel.TextSize = 40
+titleLabel.TextStrokeTransparency = 0.5
+
+statusLabel.Parent = mainFrame
+statusLabel.Size = UDim2.new(1, 0, 0.5, 0)
+statusLabel.Position = UDim2.new(0, 0, 0.5, 0)
+statusLabel.BackgroundTransparency = 1
+statusLabel.Font = Enum.Font.SourceSansBold
+statusLabel.Text = "ANTIAFK IS WORKING"
+statusLabel.TextColor3 = Color3.new(1, 1, 1)
+statusLabel.TextSize = 30
+statusLabel.TextStrokeTransparency = 0.5
+
+local function changeColor()
+    local startTime = tick()
+    while true do
+        local elapsed = tick() - startTime
+        local hue = (elapsed % 5) / 5
+        titleLabel.TextColor3 = Color3.fromHSV(hue, 1, 1)
+        statusLabel.TextColor3 = Color3.fromHSV(hue, 1, 1)
+        wait(0.1)
+    end
+end
+
+spawn(changeColor)
+
+while true do
+    local player = game.Players.LocalPlayer
+    if player and player.Character and player.Character:FindFirstChild("HumanoidRootPart") then
+        local humanoidRootPart = player.Character.HumanoidRootPart
+        humanoidRootPart.CFrame = humanoidRootPart.CFrame + humanoidRootPart.CFrame.LookVector * 25
+    end
+    wait(10)
+end
